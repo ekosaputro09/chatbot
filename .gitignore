@@ -1,4 +1,6 @@
 .DS_Store
 /__pycache__
+/.ipynb_checkpoints
 .env
 /chatgpt3/__pycache__
+google-sheet-credentials.json
