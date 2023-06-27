@@ -6,15 +6,29 @@ import os
 import traceback
 from telegram import *
 from telegram.ext import *
-from chatgpt3 import ChatGPT3
 from dotenv import load_dotenv
+import openai
 import helpers
 load_dotenv()
+
+openai.api_key = os.getenv("CHATGPT_SECRET_KEY")
+
+
+def chatgpt_response(prompt, model="gpt-3.5-turbo"):
+    messages = [{"role": "user", "content": prompt}]
+
+    response = openai.ChatCompletion.create(
+        model=model,
+        messages=messages,
+        temperature=0,
+    )
+
+    return response['choices'][0]['message']['content']
 
 
 def handle_message(update, context):
     text = str(update.message.text).lower()
-    response = gpt3.talk(text)
+    response = chatgpt_response(text)
     update.message.reply_text(response)
 
 
@@ -47,5 +61,4 @@ def main():
 if __name__=="__main__":
 
     print("Bot has started ...")
-    gpt3 = ChatGPT3(os.getenv("CHATPGT_SECRET_KEY"))
     main()

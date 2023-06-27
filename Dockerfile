@@ -12,7 +12,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 RUN pip install -U numpy
 
 # copy the content of the local directory to the working directory
-COPY /chatgpt3 ./chatgpt3
+# COPY /chatgpt3 ./chatgpt3
 COPY .env .
 COPY .env.example .
 COPY main.py .
