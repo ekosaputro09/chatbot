@@ -39,6 +39,12 @@ def search_game_all(update, context):
     update.message.reply_text(summary)
 
 
+def game_picker(update, context):
+    update.message.reply_text("Choosing game to be played ...")
+    game = helpers.game_picker()
+    update.message.reply_text(game)
+
+
 def error_message(update, context):
     print(f"Update {update} caused error {context.error}")
     update.message.reply_text(f"Oops, there is an error: {context.error}")
@@ -50,6 +56,7 @@ def main():
     dp = updater.dispatcher
 
     dp.add_handler(CommandHandler("search_game_all", search_game_all))
+    dp.add_handler(CommandHandler("game_picker", game_picker))
 
     dp.add_handler(MessageHandler(Filters.text, handle_message))
     dp.add_error_handler(error_message)

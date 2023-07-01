@@ -14,6 +14,7 @@ load_dotenv()
 gc = gspread.service_account(filename=os.getenv("CREDENTIALS_FILE"))
 sh = gc.open_by_key(os.getenv("SPREADSHEET_KEY"))
 gamepass_sheet = sh.worksheet(os.getenv("GAMEPASS_SHEET"))
+game_libraries_sheet = sh.worksheet(os.getenv("GAME_LIBRARIES_SHEET"))
 
 
 def search_game_all(game):
@@ -48,3 +49,17 @@ def search_game_all(game):
         return "Oops, there is an error: " + str(e)
 
     return text
+
+
+def game_picker():
+
+    # get data from google sheet
+    game_libraries = get_as_dataframe(game_libraries_sheet)
+    game_libraries.dropna(how='all', inplace=True)
+    game_libraries = game_libraries.loc[:,~game_libraries.columns.str.match("Unnamed")]
+    game_libraries = game_libraries[game_libraries['Played Type'] != 'Finished']
+
+    # random pick game
+    game = game_libraries.sample()
+
+    return str(game.to_dict('records')[0])
