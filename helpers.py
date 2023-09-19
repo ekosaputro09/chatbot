@@ -57,7 +57,7 @@ def game_picker():
     game_libraries = get_as_dataframe(game_libraries_sheet)
     game_libraries.dropna(how='all', inplace=True)
     game_libraries = game_libraries.loc[:,~game_libraries.columns.str.match("Unnamed")]
-    game_libraries = game_libraries[game_libraries['Played Type'] != 'Finished']
+    game_libraries = game_libraries[game_libraries['Is Finished'] != 'Finished']
 
     # random pick game
     game = game_libraries.sample()

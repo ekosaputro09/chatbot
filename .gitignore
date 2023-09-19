@@ -4,3 +4,4 @@
 .env
 /chatgpt3/__pycache__
 google-sheet-credentials.json
+*.ipynb
